@@ -5,7 +5,7 @@ import uuid
 import random
 import string
 
-from django.utils import six, timezone
+from django.utils import timezone
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 from django.db.models.query import QuerySet
@@ -72,10 +72,10 @@ class JSONEncoderForHTML(json.JSONEncoder):
             # Serializers will coerce decimals to strings by default.
             return float(obj)
         elif isinstance(obj, uuid.UUID):
-            return six.text_type(obj)
+            return str(obj)
         elif isinstance(obj, QuerySet):
             return tuple(obj)
-        elif isinstance(obj, six.binary_type):
+        elif isinstance(obj, bytes):
             # Best-effort for binary blobs. See #4187.
             return obj.decode('utf-8')
         elif hasattr(obj, 'tolist'):
